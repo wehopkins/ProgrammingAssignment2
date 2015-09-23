@@ -1,6 +1,8 @@
-## Here are a pair of functions to support creating a matrix that can cache (save a copy)
-## of the calculated inverse. It will calculate the inverse once, then return that cached
+## Here are a pair of functions to support creating a matrix object that can cache (save a copy)
+## the calculated inverse. It will calculate the inverse once, then return that cached
 ## answer when the inverse is requested again.
+## This style of saving a calculated result to avoid future recalculation is known
+## as memoization.
 
 
 # Construct and return the matrix object; can provide an initial value when constructed
@@ -33,6 +35,8 @@ makeCacheMatrix <- function(x = matrix()) {
     # return the value of the inverse - called by cacheSolve
     getinverse <- function() x.inverse
     
+    # return the matrix object, consisting of the set of operators and implied copies
+    # of the matrix and cache of 
     list (set=set,
           get=get,
           setinverse=setinverse,
@@ -40,15 +44,16 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
+## Take a matrix object constructed using makeCacheMatrix and return the
+## inverse
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    ## Return a matrix that is the inverse of 'x'
     
-    # attempt to retrieve a cached copy of the inverse
+    # retrieve cached value
     x.inv <- x$getinverse()
     
-    # if there was a cached copy of the inverse
+    # if it was a cached copy of the inverse
     if (!is.null(x.inv)) {
         # give the user a message and return the inverse
         message("getting cached data")
@@ -61,10 +66,10 @@ cacheSolve <- function(x, ...) {
     # compute the inverse
     x.inv <- solve(x.val)
     
-    # save the value of the inverse in the matrix object
+    # save the value of the inverse in the matrix object cache
     x$setinverse(x.inv)
     
-    # return the value of the inveser
+    # return the value of the inverse
     x.inv
 }
 
