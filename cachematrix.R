@@ -36,7 +36,7 @@ makeCacheMatrix <- function(x = matrix()) {
     getinverse <- function() x.inverse
     
     # return the matrix object, consisting of the set of operators and implied copies
-    # of the matrix and cache of 
+    # of the matrix and cache object
     list (set=set,
           get=get,
           setinverse=setinverse,
